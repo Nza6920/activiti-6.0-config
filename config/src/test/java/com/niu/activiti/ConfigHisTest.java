@@ -34,37 +34,12 @@ import java.util.Map;
  * @version 1.0 [2021/02/03 09:50]
  * @createTime [2021/02/03 09:50]
  */
-public class ConfigHisTest {
+public class ConfigHisTest extends BaseTest {
 
     private static final Logger log = LoggerFactory.getLogger(ConfigMDCTest.class);
 
-    /**
-     * 流程引擎
-     */
-    private ProcessEngine processEngine;
-
-    /**
-     * 初始化
-     */
-    @BeforeEach
-    public void setUp() {
-        if (processEngine == null) {
-            // 获取默认的流程引擎对象 根据资源文件加载
-            ProcessEngineConfiguration configuration = ProcessEngineConfiguration
-                    .createProcessEngineConfigurationFromResource("activiti.cfg.his.xml");
-
-            ProcessEngine processEngine = configuration.buildProcessEngine();
-            Assert.assertNotNull(processEngine);
-
-            this.processEngine = processEngine;
-        }
-    }
-
-    @AfterEach
-    public void tearDown() {
-        if (processEngine != null) {
-            processEngine.close();
-        }
+    public ConfigHisTest() {
+        super("activiti.cfg.his.xml");
     }
 
     @Test
@@ -195,23 +170,5 @@ public class ConfigHisTest {
 
     static String toString(HistoricDetail historicDetail) {
         return ToStringBuilder.reflectionToString(historicDetail, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-    /**
-     * 部署流程定义文件
-     */
-    private ProcessDefinition deploy(String filename) {
-        // 部署流程文件
-        RepositoryService repositoryService = processEngine.getRepositoryService();
-        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
-        deploymentBuilder.addClasspathResource(filename);
-        Deployment deploy = deploymentBuilder.deploy();
-
-        ProcessDefinition processDefinition = repositoryService
-                .createProcessDefinitionQuery()
-                .deploymentId(deploy.getId())
-                .singleResult();
-
-        return processDefinition;
     }
 }

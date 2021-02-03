@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="processEngineConfiguration"
+          class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+        <property name="enableDatabaseEventLogging" value="true"/>
+        <property name="eventListeners">
+            <list>
+                <ref bean="processEventListener"/>
+<!--                <ref bean="customEventListener"/>-->
+            </list>
+        </property>
+        <!-- 指定事件类型配置 -->
+        <!--        <property name="typedEventListeners">-->
+        <!--            <map>-->
+        <!--                <entry key="PROCESS_STARTED">-->
+        <!--                    <list>-->
+        <!--                        <ref bean="processEventListener"/>-->
+        <!--                    </list>-->
+        <!--                </entry>-->
+        <!--            </map>-->
+        <!--        </property>-->
+    </bean>
+
+    <!-- 事件监听器 -->
+    <bean id="processEventListener" class="com.niu.activiti.event.ProcessEventListener"/>
+
+    <!-- 自定义事件监听器 -->
+    <bean id="customEventListener" class="com.niu.activiti.event.CustomEventListener"/>
+</beans>

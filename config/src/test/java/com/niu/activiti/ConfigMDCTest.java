@@ -24,38 +24,12 @@ import org.slf4j.LoggerFactory;
  * @version 1.0 [2021/02/02 15:24]
  * @createTime [2021/02/02 15:24]
  */
-public class ConfigMDCTest {
+public class ConfigMDCTest extends BaseTest {
 
     private static final Logger log = LoggerFactory.getLogger(ConfigMDCTest.class);
 
-    /**
-     * 流程引擎
-     */
-    private ProcessEngine processEngine;
-
-    /**
-     * 初始化
-     */
-    @BeforeEach
-    public void setUp() {
-        if (processEngine == null) {
-            // 获取默认的流程引擎对象 根据资源文件加载
-            ProcessEngineConfiguration configuration = ProcessEngineConfiguration
-                    .createProcessEngineConfigurationFromResource("activiti.cfg.mdc.xml");
-            LogMDC.setMDCEnabled(true);
-
-            ProcessEngine processEngine = configuration.buildProcessEngine();
-            Assert.assertNotNull(processEngine);
-
-            this.processEngine = processEngine;
-        }
-    }
-
-    @AfterEach
-    public void tearDown() {
-        if (processEngine != null) {
-            processEngine.close();
-        }
+    public ConfigMDCTest() {
+        super("activiti.cfg.mdc.xml");
     }
 
     @Test
@@ -73,23 +47,5 @@ public class ConfigMDCTest {
 
         // 完成任务
         processEngine.getTaskService().complete(task.getId());
-    }
-
-    /**
-     * 部署流程定义文件
-     */
-    private ProcessDefinition deploy(String filename) {
-        // 部署流程文件
-        RepositoryService repositoryService = processEngine.getRepositoryService();
-        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
-        deploymentBuilder.addClasspathResource(filename);
-        Deployment deploy = deploymentBuilder.deploy();
-
-        ProcessDefinition processDefinition = repositoryService
-                .createProcessDefinitionQuery()
-                .deploymentId(deploy.getId())
-                .singleResult();
-
-        return processDefinition;
     }
 }
