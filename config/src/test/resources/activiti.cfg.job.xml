@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="processEngineConfiguration"
+          class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+        <!-- 打开异步处理 -->
+        <property name="asyncExecutorActivate" value="true"/>
+        <!-- 配置异步执行器 -->
+        <property name="asyncExecutor" ref="asyncExecutor"/>
+        <!-- 配置时间监听 -->
+        <property name="eventListeners">
+            <list>
+                <bean class="com.niu.activiti.event.JobEventListener"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置异步执行器 -->
+    <bean id="asyncExecutor" class="org.activiti.engine.impl.asyncexecutor.DefaultAsyncJobExecutor">
+        <property name="executorService" ref="executorService"/>
+    </bean>
+
+    <!-- 配置线程池 -->
+    <bean id="executorService" class="org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean">
+        <property name="threadNamePrefix" value="activiti-job"/>
+        <property name="corePoolSize" value="5"/>
+        <property name="maxPoolSize" value="20"/>
+        <property name="queueCapacity" value="100"/>
+        <!-- 配置拒绝策略 -->
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$AbortPolicy"/>
+        </property>
+    </bean>
+</beans>
