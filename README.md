@@ -1,2 +1,11 @@
-# activiti-6.0-config
-activiti 6 相关配置 Demo
+# activiti 6.0 Demo
+># 模块说明:
+>> ## config (相关配置案例)
+
+>> ## core-api (核心api的使用案例)
+
+
+
+
+
+
