@@ -12,6 +12,7 @@
     <description>activiti 6.0 配置</description>
     <modules>
         <module>config</module>
+        <module>core-api</module>
     </modules>
 
     <parent>
