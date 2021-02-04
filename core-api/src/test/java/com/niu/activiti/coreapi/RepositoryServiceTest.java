@@ -24,7 +24,7 @@ public class RepositoryServiceTest extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(RepositoryServiceTest.class);
 
     public RepositoryServiceTest() {
-        super("activiti.cfg.xml");
+        super("activiti.cfg.api.xml");
     }
 
     /**
