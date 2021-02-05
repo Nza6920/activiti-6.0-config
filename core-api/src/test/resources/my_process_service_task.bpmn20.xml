@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/test">
+    <process id="my_process" name="我的流程" isExecutable="true">
+        <!-- 定时启动 -->
+        <startEvent id="start">
+            <timerEventDefinition>
+                <!-- 循环5次(不包含第一次执行 总计执行6次) 每5s执行一次 -->
+                <timeCycle>
+                    R5/PT5S
+                </timeCycle>
+            </timerEventDefinition>
+        </startEvent>
+        <sequenceFlow id="flow1" sourceRef="start" targetRef="someTask"/>
+        <!--        <userTask id="someTask" name="hello"/>-->
+        <serviceTask id="someTask" activiti:class="com.niu.activiti.coreapi.task.TestServiceTask"/>
+        <sequenceFlow id="flow2" sourceRef="someTask" targetRef="end"/>
+        <endEvent id="end"/>
+    </process>
+</definitions>

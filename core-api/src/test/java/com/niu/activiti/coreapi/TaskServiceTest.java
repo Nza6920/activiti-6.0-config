@@ -1,6 +1,7 @@
 package com.niu.activiti.coreapi;
 
 import com.google.common.collect.Maps;
+import com.niu.activiti.coreapi.task.TestServiceTask;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.persistence.entity.CommentEntity;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -244,5 +245,29 @@ public class TaskServiceTest extends BaseTest {
         for (Event event : taskEvents) {
             log.info("taskEvent: {}", ToStringBuilder.reflectionToString(event, ToStringStyle.JSON_STYLE));
         }
+    }
+
+    /**
+     * 测试执行命令
+     */
+    @Test
+    public void testServiceTask() throws InterruptedException {
+
+        // 部署
+        ProcessDefinition processDefinition = deploy("my_process_service_task.bpmn20.xml");
+
+        log.info("流程开始");
+
+        TestServiceTask.time = 0;
+
+        // 启动流程
+        ProcessInstance processInstance = processEngine.getRuntimeService()
+                .createProcessInstanceBuilder()
+                .processDefinitionKey(processDefinition.getKey())
+                .start();
+
+        Thread.sleep(1000 * 60 * 2);
+
+        log.info("流程执行完毕: {}", processInstance);
     }
 }

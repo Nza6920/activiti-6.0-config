@@ -1,6 +1,5 @@
 package com.niu.activiti;
 
-import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Job;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
