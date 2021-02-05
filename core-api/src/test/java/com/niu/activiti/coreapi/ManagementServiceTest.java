@@ -65,7 +65,6 @@ public class ManagementServiceTest extends BaseTest {
 
         ManagementService managementService = processEngine.getManagementService();
 
-
         // 查询流程部署表数据
         TablePage tablePage = managementService.createTablePageQuery()
                 .tableName(managementService.getTableName(JobEntity.class))
