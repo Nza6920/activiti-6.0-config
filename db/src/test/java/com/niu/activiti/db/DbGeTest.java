@@ -29,7 +29,6 @@ public class DbGeTest extends BaseTest {
 
     @Test
     public void testByteArrayInsert() {
-
         processEngine.getManagementService()
                 .executeCommand(commandContext -> {
                     log.info("手动插入字节流数据");

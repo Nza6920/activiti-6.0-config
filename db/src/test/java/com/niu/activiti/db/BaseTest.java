@@ -74,4 +74,22 @@ public class BaseTest {
                 .deploymentId(deploy.getId())
                 .singleResult();
     }
+
+    /**
+     * 部署流程定义文件
+     */
+    protected ProcessDefinition deploy(String filename, String name, String category) {
+        // 部署流程文件
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
+        deploymentBuilder.addClasspathResource(filename)
+                .category(category)
+                .name(name);
+        Deployment deploy = deploymentBuilder.deploy();
+
+        return repositoryService
+                .createProcessDefinitionQuery()
+                .deploymentId(deploy.getId())
+                .singleResult();
+    }
 }
