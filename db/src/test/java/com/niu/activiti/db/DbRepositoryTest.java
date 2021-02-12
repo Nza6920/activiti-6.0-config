@@ -1,5 +1,6 @@
 package com.niu.activiti.db;
 
+import org.activiti.engine.repository.ProcessDefinition;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * 流程定义存储表测试
  *
- * @version 1.0 [2021/02/08 13:05]
  * @author [nza]
+ * @version 1.0 [2021/02/08 13:05]
  * @createTime [2021/02/08 13:05]
  */
 public class DbRepositoryTest extends BaseTest {
@@ -33,15 +34,20 @@ public class DbRepositoryTest extends BaseTest {
     @Test
     public void testSuspend() {
 
+        ProcessDefinition processDefinition = deploy("my_process_re.bpmn20.xml", "流程定义测试", "review");
+
         // 挂起流程定义文件
         processEngine.getRepositoryService()
-                .suspendProcessDefinitionById("my_process:3:7503");
+                .suspendProcessDefinitionById(processDefinition.getId());
 
 
         // 流程定义文件是否被挂起
         boolean suspended = processEngine.getRepositoryService()
-                .isProcessDefinitionSuspended("my_process:3:7503");
+                .isProcessDefinitionSuspended(processDefinition.getId());
         log.info("suspended: {}", suspended);
 
+        // 激活流程定义文件
+        processEngine.getRepositoryService()
+                .activateProcessDefinitionById(processDefinition.getId());
     }
 }

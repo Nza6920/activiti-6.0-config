@@ -5,6 +5,7 @@
           class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
         <property name="databaseSchemaUpdate" value="true"/>
         <property name="dataSource" ref="dataSource"/>
+        <property name="enableEventDispatcher" value="true"/>
         <property name="asyncExecutorActivate" value="true"/>
     </bean>
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/test">
+    <process id="my_process" name="我的流程" isExecutable="true">
+       <!-- 定时任务启动 -->
+        <startEvent id="start">
+            <timerEventDefinition>
+                <!-- 循环5次 每十秒执行一次 -->
+                <timeCycle>R5/PT10S</timeCycle>
+            </timerEventDefinition>
+        </startEvent>
+        <sequenceFlow id="flow1" sourceRef="start" targetRef="end"/>
+        <userTask id="someTask" name="hello"/>
+        <sequenceFlow id="flow2" sourceRef="someTask" targetRef="end"/>
+        <endEvent id="end"/>
+    </process>
+</definitions>
