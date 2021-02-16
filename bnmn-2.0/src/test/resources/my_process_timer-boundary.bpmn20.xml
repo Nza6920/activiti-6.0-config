@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/test">
+    <process id="my_process_timer_boundary" name="定时边界事件" isExecutable="true">
+        <startEvent id="start" name="startEvent"/>
+        <userTask id="commonTask" name="commonTask"/>
+        <boundaryEvent attachedToRef="commonTask"
+                       id="boundaryEvent"
+                       cancelActivity="true"
+                       name="timer">
+            <timerEventDefinition>
+                <!-- 流程启动 5S 后触发定时边界事件 -->
+                <timeDuration>PT5S</timeDuration>
+            </timerEventDefinition>
+        </boundaryEvent>
+        <userTask id="timeoutTask" name="timeoutTask"/>
+        <endEvent id="end1" name="endEvent1"/>
+        <endEvent id="end2" name="endEvent2"/>
+
+        <!-- 正常流程 -->
+        <sequenceFlow sourceRef="start" targetRef="commonTask"/>
+        <sequenceFlow sourceRef="commonTask" targetRef="end1"/>
+
+        <!-- 触发定时边界事件 -->
+        <sequenceFlow sourceRef="boundaryEvent" targetRef="timeoutTask"/>
+        <sequenceFlow sourceRef="timeoutTask" targetRef="end2"/>
+    </process>
+</definitions>

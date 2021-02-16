@@ -14,6 +14,7 @@
         <module>config</module>
         <module>core-api</module>
         <module>db</module>
+        <module>bnmn-2.0</module>
     </modules>
 
     <parent>
