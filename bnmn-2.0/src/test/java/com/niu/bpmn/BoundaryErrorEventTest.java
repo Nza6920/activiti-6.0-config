@@ -101,7 +101,6 @@ public class BoundaryErrorEventTest extends BaseTest {
         taskService.complete(reviewTasks.get(1).getId(), variables);
         Authentication.setAuthenticatedUserId(null);
 
-
         processInstance = processEngine.getRuntimeService()
                 .createProcessInstanceQuery()
                 .processInstanceId(processInstance.getId())
