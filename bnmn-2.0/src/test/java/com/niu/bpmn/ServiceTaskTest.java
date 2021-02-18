@@ -168,7 +168,7 @@ public class ServiceTaskTest extends BaseTest {
 
 
     /**
-     * 测试 调用方法
+     * 测试 错误信号
      */
     @Test
     public void testHandleError() {
