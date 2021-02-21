@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/test">
+
+    <signal id="alertSignal" name="alertSignal" />
+
+    <process id="my_process" name="事件网关" isExecutable="true">
+        <startEvent id="start" />
+
+        <eventBasedGateway id="gatewayStart" />
+        <intermediateCatchEvent id="signalEvent" name="Alert">
+            <signalEventDefinition signalRef="alertSignal" />
+        </intermediateCatchEvent>
+        <userTask id="task" name="信号事件任务"/>
+
+        <intermediateCatchEvent id="timerEvent" name="Alert">
+            <timerEventDefinition>
+                <timeDuration>PT5S</timeDuration>
+            </timerEventDefinition>
+        </intermediateCatchEvent>
+        <exclusiveGateway id="exclusiveGateway" />
+
+        <sequenceFlow sourceRef="start" targetRef="gatewayStart" />
+        <sequenceFlow sourceRef="gatewayStart" targetRef="signalEvent" />
+        <sequenceFlow sourceRef="gatewayStart" targetRef="timerEvent" />
+        <sequenceFlow sourceRef="timerEvent" targetRef="exclusiveGateway" />
+        <sequenceFlow sourceRef="signalEvent" targetRef="task" />
+        <sequenceFlow sourceRef="task" targetRef="exclusiveGateway" />
+        <sequenceFlow sourceRef="exclusiveGateway" targetRef="end" />
+        <endEvent id="end" />
+    </process>
+</definitions>

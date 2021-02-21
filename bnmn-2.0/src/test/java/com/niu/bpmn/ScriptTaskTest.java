@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class ScriptTaskTest extends BaseTest {
 
-    private Logger log = LoggerFactory.getLogger(ScriptTaskTest.class);
+    private final Logger log = LoggerFactory.getLogger(ScriptTaskTest.class);
 
     public ScriptTaskTest() {
         super("activiti.cfg.db.xml");

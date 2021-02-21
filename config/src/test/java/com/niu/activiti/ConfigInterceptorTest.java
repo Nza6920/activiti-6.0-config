@@ -5,6 +5,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class ConfigInterceptorTest extends BaseTest {
 
         // 获取任务
         Task task = processEngine.getTaskService().createTaskQuery().singleResult();
-        Assert.assertEquals("hello", task.getName());
+        Assertions.assertEquals("hello", task.getName());
 
         // 完成任务
         processEngine.getTaskService().complete(task.getId());

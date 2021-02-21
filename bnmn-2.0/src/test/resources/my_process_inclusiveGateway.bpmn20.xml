@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/test">
+    <process id="my_process" name="包容性网关" isExecutable="true">
+        <startEvent id="start"/>
+
+        <inclusiveGateway id="inclusiveStart"/>
+        <userTask id="task1" name="确认支付"/>
+        <userTask id="task2" name="确认收货"/>
+        <inclusiveGateway id="inclusiveEnd"/>
+        <userTask id="task3" name="订单完成"/>
+        <endEvent id="end"/>
+
+        <sequenceFlow sourceRef="start" targetRef="inclusiveStart"/>
+        <sequenceFlow sourceRef="inclusiveStart" targetRef="task1">
+            <conditionExpression>
+                <![CDATA[${score >= 80}]]>
+            </conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="inclusiveStart" targetRef="task2">
+            <conditionExpression>
+                <![CDATA[${score >= 90}]]>
+            </conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="task1" targetRef="inclusiveEnd"/>
+        <sequenceFlow sourceRef="task2" targetRef="inclusiveEnd"/>
+        <sequenceFlow sourceRef="inclusiveEnd" targetRef="task3"/>
+        <sequenceFlow sourceRef="task3" targetRef="end"/>
+    </process>
+</definitions>
