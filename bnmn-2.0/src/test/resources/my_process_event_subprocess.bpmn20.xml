@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/test">
+    <process id="my_process_subprocess" name="事件子流程" isExecutable="true">
+
+        <startEvent id="start"/>
+        <parallelGateway id="subParallelStart"/>
+        <serviceTask id="pay" name="确认支付" activiti:class="com.niu.bpmn.delegate.HandlePayDelegate"/>
+        <serviceTask id="take" name="确认收货" activiti:class="com.niu.bpmn.delegate.HandleTakeDelegate"/>
+        <parallelGateway id="subParallelEnd"/>
+        <userTask id="orderComplete" name="订单完成"/>
+        <endEvent id="end"/>
+
+        <!-- 父流程 -->
+        <sequenceFlow sourceRef="start" targetRef="subParallelStart"/>
+        <sequenceFlow sourceRef="subParallelStart" targetRef="pay"/>
+        <sequenceFlow sourceRef="subParallelStart" targetRef="take"/>
+        <sequenceFlow sourceRef="pay" targetRef="subParallelEnd"/>
+        <sequenceFlow sourceRef="take" targetRef="subParallelEnd"/>
+        <sequenceFlow sourceRef="subParallelEnd" targetRef="orderComplete"/>
+        <sequenceFlow sourceRef="orderComplete" targetRef="end"/>
+
+        <!-- 事件子流程 -->
+        <subProcess id="subProcess" triggeredByEvent="true">
+            <startEvent id="subStart">
+                <errorEventDefinition errorRef="bpmnError"/>
+            </startEvent>
+            <userTask id="orderError" name="异常处理"/>
+            <endEvent id="subEnd"/>
+
+            <!-- 事件子流程 -->
+            <sequenceFlow sourceRef="subStart" targetRef="orderError"/>
+            <sequenceFlow sourceRef="orderError" targetRef="subEnd"/>
+        </subProcess>
+    </process>
+</definitions>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/test">
+    <process id="my_process_invoke_subprocess" name="调用式子流程-主" isExecutable="true">
+
+        <startEvent id="start"/>
+
+        <!-- 调用式子流程 -->
+        <callActivity id="callActivity" calledElement="my_process_invoke_sub_process">
+            <extensionElements>
+                <!-- 建立主父流程数据关联 -->
+                <activiti:in source="errorFlag" target="errorFlag"/>
+                <activiti:out source="callSubK1" target="callSubK1"/>
+            </extensionElements>
+        </callActivity>
+
+        <!-- 边界事件 -->
+        <boundaryEvent id="boundary" attachedToRef="callActivity">
+            <errorEventDefinition errorRef="bpmnError"/>
+        </boundaryEvent>
+        <userTask id="orderComplete" name="订单完成"/>
+        <userTask id="orderError" name="异常处理"/>
+        <endEvent id="end"/>
+
+        <!-- 父流程 -->
+        <sequenceFlow sourceRef="start" targetRef="callActivity"/>
+        <sequenceFlow sourceRef="callActivity" targetRef="orderComplete"/>
+        <sequenceFlow sourceRef="boundary" targetRef="orderError"/>
+        <sequenceFlow sourceRef="orderError" targetRef="end"/>
+        <sequenceFlow sourceRef="orderComplete" targetRef="end"/>
+    </process>
+</definitions>
