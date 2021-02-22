@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.niu.bpmn</groupId>
-    <artifactId>bnmn-2.0</artifactId>
+    <artifactId>bpmn-2.0</artifactId>
 
     <dependencies>
         <dependency>

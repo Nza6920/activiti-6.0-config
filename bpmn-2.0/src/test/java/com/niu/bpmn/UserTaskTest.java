@@ -87,7 +87,6 @@ public class UserTaskTest extends BaseTest {
                 .singleResult();
         log.info("task candidate by user1: {}", taskByUser1);
 
-
         Task taskByGroup = taskService.createTaskQuery()
                 .taskCandidateGroupIn(Lists.newArrayList("group1"))
                 .singleResult();
