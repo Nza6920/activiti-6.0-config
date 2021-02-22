@@ -1,0 +1,14 @@
+server:
+  port: 7016
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# 配置 activiti 属性
+spring:
+  activiti:
+    db-history-used: true
+    history-level: full

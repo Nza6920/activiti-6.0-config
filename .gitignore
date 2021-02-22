@@ -39,3 +39,7 @@ activiti.cfg.xml
 activiti.druid.cfg.xml
 activiti.cfg.db_mysql.xml
 
+mvnw
+mvnw.cmd
+HELP.md
+.mvn/
